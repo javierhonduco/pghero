@@ -1,4 +1,4 @@
-from core  import SqlAlchemyPgHero as PgHero
+from core import SqlAlchemyPgHero as PgHero
 
 from sqlalchemy import *
 
