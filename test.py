@@ -1,6 +1,6 @@
-from core import SqlAlchemyPgHero as PgHero
+from core import SqlAlchemyPgHero, pghero
 
-from sqlalchemy import *
+from sqlalchemy import create_engine
 
 db_path = 'postgres://javierhonduco@localhost:5432/tw'
 
@@ -8,7 +8,7 @@ db = create_engine(db_path)
 
 print db.engine.name
 
-pghero = PgHero(db)
+pghero = pghero('sqlalchemy', db)
 
 print pghero.running_queries()
 print

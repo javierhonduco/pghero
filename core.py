@@ -2,6 +2,14 @@ from queries import Queries as q
 from exceptions import NotImplementedError #NotPostgresEngine
 
 from sqlalchemy.exc import ProgrammingError
+
+def pghero(toolkit, db):
+    if toolkit == 'sqlalchemy':
+        return SqlAlchemyPgHero(db)
+
+class PgHeroBase():
+    pass
+
 class SqlAlchemyPgHero(): # TODO: inherit from base class
 
     def __init__(self, db):
