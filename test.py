@@ -1,4 +1,4 @@
-from core import SqlAlchemyPgHero, pghero
+from core import pghero
 
 from sqlalchemy import create_engine
 
