@@ -5,7 +5,7 @@ class PgHero:
 
 class SqlAlchemyPgHero(): # TODO: inherit from base classº
 
-    def __init__(db):
+    def __init__(self, db):
         self.db = db
         if not self.is_pg():
             raise Exception('Database engine should be postgres')
