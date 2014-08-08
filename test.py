@@ -8,7 +8,8 @@ db = create_engine(db_path)
 
 print db.engine.name
 
-pghero = PgHero(db) 
+pghero = PgHero(db)
+
 print pghero.running_queries()
 print
 print pghero.long_running_queries()

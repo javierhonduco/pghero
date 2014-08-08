@@ -141,8 +141,38 @@ class Queries:
     SELECT pg_size_pretty(pg_database_size(current_database()))
   '''
   
+  slow_queries = ''' 
+    SELECT
+      query,
+      (total_time / 1000 / 60) as total_minutes,
+      (total_time / calls) as average_time,
+      calls
+    FROM
+      pg_stat_statements
+    INNER JOIN
+      pg_database ON pg_database.oid = pg_stat_statements.dbid
+    WHERE
+      pg_database.datname = current_database()
+      AND calls >= 100
+      AND (total_time / calls) >= 20
+    ORDER BY
+      total_minutes DESC
+    LIMIT 100
+  '''
+
+  query_stats_enabled = '''
+    SELECT 
+      COUNT(*) AS count 
+    FROM pg_extension 
+    WHERE extname = 'pg_stat_statements'
+  '''
+
+  query_stats_readable = '''
+    SELECT has_table_privilege(current_user, 'pg_stat_statements', 'SELECT')
+  '''
+
+  enable_query_stats = '''
+    CREATE EXTENSION pg_stat_statements
+  ''' 
   # TODO: Add query_stats_enabled related queries
   # TODO: Add kill related queries
-
-
-

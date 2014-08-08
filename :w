@@ -44,29 +44,21 @@ class SqlAlchemyPgHero(): # TODO: inherit from base class
             return self.select_all(q.slow_queries)
         return []
 
-    #def query_stats_enabled(self):
-    #    qse = self.select_all(q.query_stats_enabled)
-    #    qsr = self.query_stats_readable()
-    #    print  (qse, qsr)
-    #    return qse and qsr
+    def query_stats_enabled(self):
+        qse = self.select_all(q.query_stats_enabled)
+        qsr = self.query_stats_readable()
+        print  (qse, qsr)
+        return []
     
     def query_stats_readable(self):
         try:
             return self.select_all(q.query_stats_readable)
         except ProgrammingError:
-            return False
+            return false
 
     def is_pg(self):
         return self.db.engine.name == 'postgresql'
-
-    def enable_query_stats(self):
-        self.execute(q.enable_query_stats)
-        return True
-
-    def disable_query_stats(self):
-        self.execute(q.disable_query_stats)
-        return True
-
+    
     def select_all(self, sql):
         result = self.execute(sql).fetchall()
         result = list(self.execute(sql).fetchall())
