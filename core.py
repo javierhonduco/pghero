@@ -1,9 +1,10 @@
 from queries import Queries as q
+from exceptions import NotImplementedError #NotPostgresEngine
 
 class PgHero:
     pass
 
-class SqlAlchemyPgHero(): # TODO: inherit from base classº
+class SqlAlchemyPgHero(): # TODO: inherit from base class
 
     def __init__(self, db):
         self.db = db
@@ -11,41 +12,45 @@ class SqlAlchemyPgHero(): # TODO: inherit from base classº
             raise Exception('Database engine should be postgres')
     
     def running_queries(self):
-        return self.execute(q.running_queries).fetchall()
+        return self.select_all(q.running_queries)
 
     def long_running_queries(self):
-        return self.execute(q.long_running_queries).fetchall()
+        return self.select_all(q.long_running_queries)
     
     def index_hit_rate(self):
-        return self.execute(q.index_hit_rate).fetchall()
+        return float(self.select_all(q.index_hit_rate)[0])
     
     def table_hit_rate(self):
-        return self.execute(q.table_hit_rate).fetchall()
+        return float(self.select_all(q.table_hit_rate)[0])
 
     def index_usage(self):
-        return self.execute(q.usage).fetchall()
+        return self.select_all(q.index_usage)
 
     def missing_indexes(self):
-        return self.execute(q.missing_indexes).fetchall()
+        return self.select_all(q.missing_indexes)
 
     def unused_tables(self):
-        return self.execute(q.unused_tables).fetchall()
+        return self.select_all(q.unused_tables)
 
     def unused_indexes(self):
-        return self.execute(q.unused_indexes).fetchall()
+        return self.select_all(q.unused_indexes)
 
     def relation_sizes(self):
-        return self.execute(q.relation_sizes).fetchall()
+        return self.select_all(q.relation_sizes)
 
     def database_size(self):
-        return self.execute(q.database_size).fetchall()
+        return self.select_all(q.database_size)
     
     def is_pg(self):
-        return self.db.engine.name == 'postgres'
+        return self.db.engine.name == 'postgresql'
+    
+    def select_all(self, sql):
+        result = self.execute(sql).fetchall()
+        result = list(self.execute(sql).fetchall())
+        if result == []:
+            return []
+        return filter(None, result[0])
 
-    def execute(self):
-        return self.db.engine.execute
+    def execute(self, sql):
+        return self.db.engine.execute(sql)
 
-
-#pghero = PgHero() # TODO. Add example. Pass instance of SA
-#pghero.running_queries()
