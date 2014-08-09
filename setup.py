@@ -5,5 +5,5 @@ setup(
         version='0.0.4',
         packages=['pghero'],
         license='MIT',
-        long_description=open('README.txt').read(),
+        long_description='pghero python port',
 )
