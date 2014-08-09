@@ -50,10 +50,10 @@ class SqlAlchemyPgHero(): # TODO: inherit from base class
     def database_size(self):
         return self.select_all(q.database_size)
     
-    def slow_queries(self):
-        if self.query_stats_enabled():
-            return self.select_all(q.slow_queries)
-        return []
+    #def slow_queries(self):
+    #    if self.query_stats_enabled():
+    #        return self.select_all(q.slow_queries)
+    #    return []
 
     #def query_stats_enabled(self):
     #    qse = self.select_all(q.query_stats_enabled)
