@@ -15,10 +15,12 @@ class PgHeroBase():
 
 class SqlAlchemyPgHero(): # TODO: inherit from base class
 
-    def __init__(self, db):
+    def __init__(self, db=None):
+        if db is None:
+            raise Exception('db should not be None')
         self.db = db
         if not self.is_pg():
-            raise NotPostgresEn('Database engine should be postgres')
+            raise NotPostgresEngine('Database engine should be postgres')
     
     def running_queries(self):
         return self.select_all(q.running_queries)
