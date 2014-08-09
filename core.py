@@ -1,7 +1,10 @@
 from queries import Queries as q
-from exceptions import NotImplementedError #NotPostgresEngine
+from exceptions import NotPostgresEngine
 
-from sqlalchemy.exc import ProgrammingError
+try:
+    from sqlalchemy.exc import ProgrammingError
+except ImportError:
+    print 'Sqlalchemy not installed in this system.'
 
 def pghero(toolkit, db):
     if toolkit == 'sqlalchemy':
@@ -15,7 +18,7 @@ class SqlAlchemyPgHero(): # TODO: inherit from base class
     def __init__(self, db):
         self.db = db
         if not self.is_pg():
-            raise Exception('Database engine should be postgres')
+            raise NotPostgresEn('Database engine should be postgres')
     
     def running_queries(self):
         return self.select_all(q.running_queries)
