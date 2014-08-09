@@ -4,7 +4,7 @@ from exceptions import NotPostgresEngine
 try:
     from sqlalchemy.exc import ProgrammingError
 except ImportError:
-    print 'Sqlalchemy not installed in this system.'
+    print 'Sqlalchemy is not installed in this system.'
 
 def pghero(toolkit, db):
     if toolkit == 'sqlalchemy':
